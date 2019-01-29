@@ -7,6 +7,7 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <UserSecretsId>tile38test3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +24,12 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="1.4.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.0.519" />
   </ItemGroup>
+  <Target Name="CopyNLogConfigNative" AfterTargets="AfterBuild" Condition="Exists('../nlog.config')">
+    <Copy SourceFiles="../nlog.config" DestinationFolder="$(OutDir)"/>
+  </Target>
+  <Target Name="CopyNLogConfigDocker" AfterTargets="AfterBuild" Condition="Exists('nlog.config')">
+    <Copy SourceFiles="nlog.config" DestinationFolder="$(OutDir)"/>
+  </Target>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
